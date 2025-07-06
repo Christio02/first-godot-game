@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://cv36je1pc4mwm"]
+[gd_scene load_steps=10 format=3 uid="uid://cv36je1pc4mwm"]
 
 [ext_resource type="Texture2D" uid="uid://b5g5qrdhqfdf8" path="res://art/playerGrey_up1.png" id="1_hqtel"]
 [ext_resource type="Script" uid="uid://deeb8inwk0053" path="res://player.gd" id="1_sweqy"]
+[ext_resource type="PackedScene" uid="uid://dw8l1h8ivrsp5" path="res://projectile.tscn" id="2_2hs0m"]
 [ext_resource type="Texture2D" uid="uid://bmd8jmuv2dyer" path="res://art/playerGrey_up2.png" id="2_sweqy"]
 [ext_resource type="Texture2D" uid="uid://mhwghtlliwbi" path="res://art/playerGrey_walk1.png" id="3_2hs0m"]
 [ext_resource type="Texture2D" uid="uid://c7v41vcq4x752" path="res://art/playerGrey_walk2.png" id="4_1jxqw"]
+[ext_resource type="AudioStream" uid="uid://jydhnpgjlnta" path="res://art/sounds/laser.wav" id="7_1jxqw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dw050"]
 animations = [{
@@ -37,6 +39,7 @@ height = 70.0
 
 [node name="Player" type="Area2D"]
 script = ExtResource("1_sweqy")
+Projectile = ExtResource("2_2hs0m")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -46,5 +49,11 @@ animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_b26j0")
+
+[node name="Gun" type="Marker2D" parent="."]
+position = Vector2(27, -10)
+
+[node name="GunSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_1jxqw")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -18,9 +18,12 @@ func new_game():
 	$StartTimer.start()
 	$HUD.update_score(score)
 	$HUD.show_message("Get Ready")
+	if !$Music.playing: # if false, play music
+		$Music.play()
 
 
-
+func _ready() -> void:
+	$Music.play() # init before clicking start
 
 func _on_mob_timer_timeout():
 	# Create a new instance of the Mob scene.

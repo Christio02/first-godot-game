@@ -53,7 +53,6 @@ rotation = 0.00626297
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_272bh")
-autoplay = true
 parameters/looping = true
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]

@@ -3,6 +3,8 @@ extends Area2D
 signal hit
 
 @export var speed: int = 400 # speed of player (pixels / sec) @export allows setting value in game engine
+@export var Projectile : PackedScene
+
 
 var screen_size # game window size
 var player_size # sprite size
@@ -38,8 +40,22 @@ func _process(delta: float) -> void:
 	$AnimatedSprite2D.flip_v = velocity.y > 0
 
 
+
 	position += velocity * delta # consistent movement regardless of frame rate
 	position = position.clamp(Vector2.ZERO + (player_size / 2), screen_size) # prevent player to go out of screen
+
+	if Input.is_action_just_pressed("shoot"):
+		shoot()
+
+func shoot() -> void:
+	if not visible or not get_parent().get_node("MobTimer").time_left > 0:
+		return
+	var p: Node = Projectile.instantiate()
+	owner.add_child(p)
+	var mouse_pos: Vector2 = get_global_mouse_position()
+	var direction: Vector2 = (mouse_pos - global_position).normalized()
+	p.start(position, direction, direction.angle())
+	$GunSound.play()
 
 
 func player_control() -> Vector2:
