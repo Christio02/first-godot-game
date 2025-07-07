@@ -1,6 +1,8 @@
 extends Area2D
 @export var speed: int = 450
 var direction: Vector2
+signal mob_hit
+
 
 
 
@@ -20,4 +22,7 @@ func _process(delta: float) -> void:
 func _on_Projectile_body_entered(body: Node2D):
 	if body.is_in_group("mobs"):
 		body.queue_free() # delete mob on hit
+		# signal "main" and update score
+		mob_hit.emit()
+
 	queue_free() # also delete projectile

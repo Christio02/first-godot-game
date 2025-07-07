@@ -22,3 +22,4 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_qxf0c")
 
 [connection signal="body_entered" from="." to="." method="_on_Projectile_body_entered"]
+[connection signal="mob_hit" from="." to="." method="_on_mob_hit"]

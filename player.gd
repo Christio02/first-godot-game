@@ -18,10 +18,17 @@ func _ready() -> void:
 	hide()
 
 
+func allowed_playing() -> bool:
+	if not get_parent().get_node("MobTimer").time_left > 0 or not visible:
+		return false
+	else:
+		return true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if !allowed_playing():
+		return
 	var velocity: Vector2 = Vector2.ZERO
 
 	velocity = player_control()
@@ -48,13 +55,14 @@ func _process(delta: float) -> void:
 		shoot()
 
 func shoot() -> void:
-	if not visible or not get_parent().get_node("MobTimer").time_left > 0:
+	if !allowed_playing():
 		return
 	var p: Node = Projectile.instantiate()
 	owner.add_child(p)
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	var direction: Vector2 = (mouse_pos - global_position).normalized()
 	p.start(position, direction, direction.angle())
+	p.mob_hit.connect(get_parent()._on_projectile_mob_hit)
 	$GunSound.play()
 
 

@@ -9,8 +9,11 @@ func show_message(text) -> void:
 	$Message.show()
 	$MessageTimer.start()
 
-func show_game_over() -> void:
-	show_message("Game over")
+func show_game_over(final_score: int, high_score: int) -> void:
+	if final_score > high_score:
+		show_message("New High Score!")
+	else:
+		show_message("Game Over")
 	# wait for message to timeout
 	await $MessageTimer.timeout
 	$Message.text = "Dodge the creeps!"
@@ -20,8 +23,10 @@ func show_game_over() -> void:
 	$StartButton.show()
 
 func update_score(score) -> void:
-	$ScoreLabel.text = "Score: {score}".format({"score": score})
+	$ScoreLabel.text = "Score: %s" % score
 
+func update_high_score(highscore) -> void:
+	$HighScoreLabel.text = "High Score: %s" % highscore
 
 
 func _on_start_button_pressed() -> void:
